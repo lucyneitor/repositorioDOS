@@ -34,31 +34,32 @@ class DepartamentoDAO: #primer bsoquejo
         finally:
             conn.close()
     
-    @staticmethod #revisar
+    @staticmethod
     def obtener_todos_departamentos() -> list[Departamento]:
-        """
-        Obtiene todos los departamentos de la base de datos.
-        """
         conn = Database().get_connection()
         try:
-            cursor: Cursor = conn.cursor()
-            departamentos = []
-            cursor.execute(
-                """
-                SELECT id_departamento, nombre, e.nombre, presupuesto
-                FROM departamento d, empleado e
-                WHERE d.gerente = e.rut
-                """
-            )
-            departamentos = cursor.fetchall()
-            for fila in departamentos:
-                departamentos.append(Departamento([fila['id_departamento'], fila['nombre'], fila['gerente'], fila['presupuesto']]))
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT id_departamento, nombre, gerente, presupuesto
+                FROM departamento
+                ORDER BY id_departamento
+            """)
+            filas = cursor.fetchall()
+
+            return [
+                Departamento(
+                    fila["id_departamento"],
+                    fila["nombre"],
+                    fila["gerente"],
+                    fila["presupuesto"],
+                )
+                for fila in filas
+            ]
         except Exception as e:
             print(f"Error al obtener departamentos de BD: {e}")
-            return None
+            return []
         finally:
             conn.close()
-        return departamentos
     
     @staticmethod
     def obtener_departamento_por_id(id_departamento: int) -> Departamento:

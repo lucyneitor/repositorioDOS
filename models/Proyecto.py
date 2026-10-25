@@ -7,7 +7,7 @@ class Proyecto:
     esto despues estara conectado con la base de datos de tiempo para gestionar estos
     """
     
-    def _init_(self, nombre:str, descripcion:str, fecha_inicio:str, empleado:empleado):
+    def __init__(self, nombre:str, descripcion:str, fecha_inicio:str, empleado:empleado):
         self.nombre = nombre
         self.descripcion = descripcion
         self.fecha_inicio = fecha_inicio

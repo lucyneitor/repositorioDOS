@@ -42,6 +42,7 @@ class ProyectoView:
         if proyecto:
             print(f"\nID: {proyecto.id_proyecto}")
             print(f"Nombre: {proyecto.nombre}")
+            print(f"descripcion: ´´")
             print(f"Fecha inicio: {proyecto.fecha_inicio}")
             print(f"Fecha fin: {proyecto.fecha_fin}")
         else:

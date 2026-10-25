@@ -62,7 +62,7 @@ class DepartamentoView:
         nuevo_presupuesto = input(f"Nuevo presupuesto ({departamento.presupuesto}): ")
 
         if nuevo_presupuesto.strip() != "":
-            departamento.presupuesto = float(nuevo_presupuesto)
+            departamento.presupuesto = int(nuevo_presupuesto)
         departamento.nombre = nuevo_nombre
         departamento.gerente = nuevo_gerente
 

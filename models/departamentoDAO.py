@@ -72,13 +72,21 @@ class DepartamentoDAO: #primer bsoquejo
             cursor: Cursor = conn.cursor()
             cursor.execute(
                 """
-                SELECT nombre, gerente, presupuesto 
+                SELECT id_departamento, nombre, gerente, presupuesto
                 FROM departamento WHERE id_departamento = ?
-                """, (id_departamento,)
+                """,
+                (id_departamento,),
             )
-            filas = cursor.fetchall()
-            for fila in filas:
-                departamentos.append(Departamento([fila['id_departamento'], fila['nombre'], fila['gerente'], fila['presupuesto']]))
+            fila = cursor.fetchone()
+            if fila is None:
+                return None
+
+            return Departamento(
+                fila["id_departamento"],
+                fila["nombre"],
+                fila["gerente"],
+                fila["presupuesto"],
+            )
         except Exception as e:
             print(f"Error al obtener departamento por ID de BD: {e}")
         finally:

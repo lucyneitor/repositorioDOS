@@ -5,7 +5,7 @@ from models.ProyectoDAO import ProyectoDAO
 class ProyectoView:
     @staticmethod
     def listar_proyectos():
-        proyectos = ProyectoDAO.obtener_todos_proyectos()
+        proyectos = ProyectoDAO.obtener_proyectos()
         if not proyectos:
             print("No hay proyectos registrados.")
             return
@@ -13,10 +13,10 @@ class ProyectoView:
         print("\n--- LISTA DE PROYECTOS ---")
         for p in proyectos:
             print(
-                f"ID: {p.id_proyecto} | "
-                f"Nombre: {p.nombre} | "
-                f"Fecha inicio: {p.fecha_inicio} | "
-                f"Fecha fin: {p.fecha_fin}"
+                f"ID: {p['id_proyecto']} | "
+                f"Nombre: {p['nombre']} | "
+                f"Fecha inicio: {p['fecha_inicio']} | "
+                f"Fecha fin: {p['fecha_fin']}"
             )
 
     @staticmethod
@@ -24,10 +24,11 @@ class ProyectoView:
         print("\n--- AGREGAR PROYECTO ---")
         id_proyecto = int(input("ID del proyecto: "))
         nombre = input("Nombre del proyecto: ")
+        descripcion = input("Descripción del proyecto: ")
         fecha_inicio = input("Fecha de inicio (YYYY-MM-DD): ")
         fecha_fin = input("Fecha de fin (YYYY-MM-DD): ")
 
-        proyecto = Proyecto(id_proyecto, nombre, fecha_inicio, fecha_fin)
+        proyecto = Proyecto(id_proyecto, descripcion ,nombre, fecha_inicio, fecha_fin)
 
         if ProyectoDAO.agregar_proyecto(proyecto):
             print("Proyecto agregado correctamente.")
@@ -37,20 +38,20 @@ class ProyectoView:
     @staticmethod
     def buscar_proyecto():
         id_proyecto = int(input("Ingrese ID del proyecto: "))
-        proyecto = ProyectoDAO.obtener_proyecto_por_id(id_proyecto)
+        proyecto = ProyectoDAO.obtener_proyecto_id(id_proyecto)
 
         if proyecto:
-            print(f"\nID: {proyecto.id_proyecto}")
-            print(f"Nombre: {proyecto.nombre}")
-            print(f"Fecha inicio: {proyecto.fecha_inicio}")
-            print(f"Fecha fin: {proyecto.fecha_fin}")
+            print(f"\nID: {proyecto['id_proyecto']}")
+            print(f"Nombre: {proyecto['nombre']}")
+            print(f"Fecha inicio: {proyecto['fecha_inicio']}")
+            print(f"Fecha fin: {proyecto['fecha_fin']}")
         else:
             print("No se encontró el proyecto.")
 
     @staticmethod
     def actualizar_proyecto():
         id_proyecto = int(input("Ingrese ID del proyecto a actualizar: "))
-        proyecto = ProyectoDAO.obtener_proyecto_por_id(id_proyecto)
+        proyecto = ProyectoDAO.obtener_proyecto_id(id_proyecto)
 
         if not proyecto:
             print("Proyecto no encontrado.")

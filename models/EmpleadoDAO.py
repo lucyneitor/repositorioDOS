@@ -75,7 +75,7 @@ class EmpleadoDAO:
                 ORDER BY nombre
                 """
             )
-            return [EmpleadoDAO._crear_empleado(fila) for fila in cursor.fetchall()]
+            return [EmpleadoDAO.crear_empleado(fila) for fila in cursor.fetchall()]
         finally:
             conn.close()
 
@@ -124,7 +124,7 @@ class EmpleadoDAO:
                 (rut,),
             )
             fila = cursor.fetchone()
-            return EmpleadoDAO._crear_empleado(fila) if fila else None
+            return EmpleadoDAO.crear_empleado(fila) if fila else None
         finally:
             conn.close()
 

@@ -1,8 +1,6 @@
 from sqlite3 import Cursor 
 from config.database import Database
 from models.Tiempo import Tiempo
-#from models.persona import persona #no lo ocupa
-#from models.Proyecto import Proyecto #no lo ocupa
 
 class TiempoDAO:
     @staticmethod
@@ -10,6 +8,21 @@ class TiempoDAO:
         conn = Database().get_connection()
         try:
             cursor : Cursor = conn.cursor()
+            cursor.execute(
+                "SELECT 1 FROM empleado WHERE rut = ?",
+                (tiempo.id_empleado,),
+            )
+            if cursor.fetchone() is None:
+                print(f"No existe un empleado con RUT {tiempo.id_empleado}.")
+                return False
+
+            cursor.execute(
+                "SELECT 1 FROM proyecto WHERE id_proyecto = ?",
+                (tiempo.id_proyecto,),
+            )
+            if cursor.fetchone() is None:
+                print(f"No existe un proyecto con ID {tiempo.id_proyecto}.")
+                return False
             cursor.execute("""INSERT INTO tiempo
                            (fecha, 
                            hora_entrada, 
